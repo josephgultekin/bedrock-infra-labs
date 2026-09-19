@@ -3,26 +3,7 @@
 Two ways of using Amazon Comprehend against the same sample customer-feedback
 documents, since they have genuinely different shapes worth seeing hands-on:
 
-```
-S3 bucket (incoming/) --S3 event--> Lambda (analyzer)
-                                        |
-                          DetectDominantLanguage, then with that
-                          language code: DetectSentiment,
-                          DetectKeyPhrases, DetectEntities,
-                          DetectPiiEntities (offsets/types only,
-                          never raw PII text)
-                                        |
-                                        v
-                          S3 bucket (insights/<file>.json)
-
-scripts/run_pii_redaction_job.py:
-S3 bucket (batch-input/) --> StartPiiEntitiesDetectionJob
-   (Mode=ONLY_REDACTION, DataAccessRoleArn = dedicated
-   Comprehend service role, not the Lambda's role)
-                                        |
-                                        v
-S3 bucket (batch-output/) -- redacted copies of the input docs
-```
+![Architecture diagram with AWS service icons](scripts/architecture.png)
 
 The real-time path uses the caller's own IAM permissions for synchronous,
 per-document inference calls. The batch path is asynchronous and has

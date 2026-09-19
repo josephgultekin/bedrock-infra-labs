@@ -1,0 +1,6 @@
+{
+  "target": "claude",
+  "mode": "correct",
+  "context": "Under Incoterms 2020, DAP requires the seller to deliver goods ready for unloading at the named destination, with the buyer responsible for import clearance and duties.",
+  "question": "Under DAP, who is responsible for import clearance?"
+}

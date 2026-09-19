@@ -1,0 +1,5 @@
+{
+  "target": "embedding",
+  "mode": "correct",
+  "query": "What happens if a shipment is delayed at customs due to missing certificates of origin?"
+}

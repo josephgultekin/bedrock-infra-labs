@@ -1,0 +1,76 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Container Pickup Scheduling API",
+    "version": "1.0.0",
+    "description": "Book container pickup appointments at a maritime terminal."
+  },
+  "paths": {
+    "/pickup-appointments": {
+      "post": {
+        "description": "Book a container pickup appointment at a terminal. Requires a valid terminal ID, an ISO 8601 appointment time, and a supported container type.",
+        "operationId": "bookPickupAppointment",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["terminal_id", "appointment_time", "container_type"],
+                "properties": {
+                  "terminal_id": {
+                    "type": "string",
+                    "description": "Terminal identifier, e.g. TML-01."
+                  },
+                  "appointment_time": {
+                    "type": "string",
+                    "format": "date-time",
+                    "description": "Requested pickup time in ISO 8601 format, e.g. 2026-09-02T14:00:00Z."
+                  },
+                  "container_type": {
+                    "type": "string",
+                    "enum": ["DRY", "REEFER", "TANK", "OPEN_TOP", "FLAT_RACK"],
+                    "description": "Container type for the appointment."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Appointment booked successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "confirmation_id": { "type": "string" },
+                    "terminal_id": { "type": "string" },
+                    "appointment_time": { "type": "string" },
+                    "container_type": { "type": "string" },
+                    "status": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid booking request - missing or malformed fields.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": { "type": "string" },
+                    "details": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

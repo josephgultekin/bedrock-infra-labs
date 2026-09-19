@@ -1,0 +1,5 @@
+{
+  "target": "embedding",
+  "mode": "broken_messages_format",
+  "query": "What happens if a shipment is delayed at customs due to missing certificates of origin?"
+}

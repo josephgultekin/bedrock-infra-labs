@@ -55,7 +55,7 @@ tofu apply
 cd scripts
 pip install -r requirements.txt
 
-export DOCS_BUCKET=$(tofu output -chdir=.. -raw docs_bucket)
+export DOCS_BUCKET=$(tofu -chdir=.. output -raw docs_bucket)
 python3 upload_sample_feedback.py
 ```
 
@@ -69,7 +69,7 @@ type set depends on Comprehend's current PII taxonomy).
 ### 2. Async batch job with automatic redaction
 
 ```bash
-export DATA_ACCESS_ROLE_ARN=$(tofu output -chdir=.. -raw comprehend_data_access_role_arn)
+export DATA_ACCESS_ROLE_ARN=$(tofu -chdir=.. output -raw comprehend_data_access_role_arn)
 python3 run_pii_redaction_job.py
 ```
 

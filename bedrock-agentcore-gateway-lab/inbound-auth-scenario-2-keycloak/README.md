@@ -34,9 +34,15 @@ are conventionally external services, same as Cognito is in scenario 1.
 
 ## This is the riskiest stack in the repo - read this first
 
-Everything in `bedrock-agentcore-lab`'s and scenario 1's "unverified"
-sections applies here too (trust principals, IAM action names), **plus**
-this scenario adds real, new, untested surface:
+`bedrock-agentcore-lab`'s remaining "unverified" items apply here too
+(IAM action names beyond the trust principal). The
+`bedrock-agentcore.amazonaws.com` trust principal + `gateway_iam_role`
+passthrough itself **is** confirmed working (scenario 1's Cognito stack
+was applied and tested live), and the `tools/call` naming quirk scenario
+1 found (`<gateway_target_name>___<tool_name>`, e.g. `ping___ping` -
+already baked into this scenario's `scripts/get_token_and_call_gateway.py`)
+should carry over too, since it's Gateway behavior, not IdP-specific.
+**Plus**, this scenario adds real, new, untested surface:
 
 - **Keycloak-behind-App-Runner hostname behavior.** `apprunner.tf` sets
   `KC_HOSTNAME_STRICT = "false"` as a workaround for not knowing the

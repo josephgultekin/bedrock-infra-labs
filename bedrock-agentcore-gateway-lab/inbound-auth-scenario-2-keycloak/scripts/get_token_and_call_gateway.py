@@ -3,10 +3,14 @@ Gets a client_credentials JWT from Keycloak, then calls the AgentCore
 Gateway's MCP endpoint with it - same shape as scenario 1's script, against
 a self-hosted IdP instead of Cognito.
 
-NOTE (unverified - see README): same caveats as scenario 1's script
-(Gateway's exact JSON-RPC envelope), plus scenario 2's own caveats about
-Keycloak-behind-App-Runner hostname behavior - if this fails, check the App
-Runner service logs before assuming the script is wrong.
+NOTE: scenario 1's script confirmed against a live call that the
+Gateway's tools/list envelope matches the standard MCP spec, and that
+tools/call must address a tool by "<gateway_target_name>___<tool_name>"
+(triple underscore) - here "ping___ping", since both the gateway_target
+and its one tool are named "ping" (see lambda_tool.tf). Scenario 2's own
+caveats about Keycloak-behind-App-Runner hostname behavior are still
+unverified - if this fails, check the App Runner service logs before
+assuming the script is wrong.
 
 Setup:
     export TOKEN_ENDPOINT=$(tofu output -raw token_endpoint)
@@ -64,7 +68,7 @@ def main():
     print(json.dumps(response.json(), indent=2))
 
     print("\n4. Calling tools/call ping WITH the token...")
-    response = call_gateway("tools/call", {"name": "ping", "arguments": {"message": "hello"}}, token=token)
+    response = call_gateway("tools/call", {"name": "ping___ping", "arguments": {"message": "hello"}}, token=token)
     print(f"   HTTP {response.status_code}")
     print(json.dumps(response.json(), indent=2))
 

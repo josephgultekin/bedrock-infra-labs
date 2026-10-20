@@ -32,13 +32,21 @@ README for why a NAT instance instead of a NAT Gateway.
 2. A region where Bedrock AgentCore is available (default here is
    `us-east-1`).
 
-Validated with `tofu validate` and a real `tofu plan` against the `dops`
-account - not yet with a full `apply`. The trust principal
-`bedrock-agentcore.amazonaws.com` in `gateway.tf` couldn't be confirmed
-against AWS's live Service Authorization Reference from this sandbox (same
-caveat as `bedrock-agentcore-lab` - see that lab's README for the full
-list of what that covers). Cognito's discovery URL format and OAuth2
-endpoints, by contrast, are standard and not in question.
+**Confirmed working end to end against a live `apply`** (2026-10-20): the
+`bedrock-agentcore.amazonaws.com` trust principal in `gateway.tf` is
+correct, `gateway_iam_role` credential passthrough successfully invokes
+the `ping` Lambda, and the `CUSTOM_JWT` authorizer correctly rejects
+unauthenticated calls (`401`) and accepts a valid Cognito JWT (`200`).
+One real surprise worth knowing before you test this yourself: `tools/call`
+must address the tool as `ping___ping`
+(`<gateway_target_name>___<tool_name>`), not the bare tool name - `scripts/
+get_token_and_call_gateway.py` already accounts for this.
+
+Two apply-time bugs were also caught and fixed by a real run: an
+`aws_security_group` description can't contain an apostrophe, and a
+Cognito user pool domain prefix can't contain the literal word "cognito"
+(this lab's own `project_name` did, until `cognito.tf` was patched to swap
+it out just for the domain).
 
 ## Run it
 

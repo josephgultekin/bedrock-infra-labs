@@ -3,9 +3,13 @@ Gets a client_credentials JWT from Cognito, then calls the AgentCore
 Gateway's MCP endpoint with it - proving the CUSTOM_JWT authorizer accepts
 a valid token, then proving it rejects a missing/garbage one.
 
-NOTE (unverified - see README): the Gateway's JSON-RPC request/response
-envelope (tools/list, tools/call) matches the standard MCP spec, but
-AgentCore's exact behavior hasn't been confirmed against a live call.
+NOTE: confirmed against a live call (2026-10-20) that the Gateway's
+tools/list JSON-RPC envelope matches the standard MCP spec. One real
+surprise: tools/call must address a tool by
+"<gateway_target_name>___<tool_name>" (triple underscore), not the bare
+tool name from the inline_payload - tools/list's response reveals the real
+name (here, "ping___ping", since both the gateway_target and its one tool
+are named "ping" - see lambda_tool.tf).
 
 Setup:
     export TOKEN_ENDPOINT=$(tofu output -raw token_endpoint)
@@ -65,7 +69,7 @@ def main():
     print(json.dumps(response.json(), indent=2))
 
     print("\n4. Calling tools/call ping WITH the token...")
-    response = call_gateway("tools/call", {"name": "ping", "arguments": {"message": "hello"}}, token=token)
+    response = call_gateway("tools/call", {"name": "ping___ping", "arguments": {"message": "hello"}}, token=token)
     print(f"   HTTP {response.status_code}")
     print(json.dumps(response.json(), indent=2))
 

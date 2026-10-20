@@ -110,7 +110,13 @@ strings - double-check each one before `apply` (a wrong IAM action name
 won't fail `tofu plan`, only `apply` or the actual agent run):
 
 - The trust principal `bedrock-agentcore.amazonaws.com` used in
-  `gateway.tf` and `runtime.tf`'s assume-role policies.
+  `gateway.tf` and `runtime.tf`'s assume-role policies. **Update:** this
+  exact principal + `gateway_iam_role` credential passthrough was confirmed
+  working against a live `apply` in the sibling
+  `bedrock-agentcore-gateway-lab/inbound-auth-scenario-1-cognito` (gateway
+  created, Lambda invoked successfully through it) - strong evidence this
+  part is correct, though this lab's own Runtime-side usage of the same
+  principal is still unconfirmed.
 - The IAM action names `bedrock-agentcore:InvokeGateway`,
   `bedrock-agentcore:GetWorkloadAccessToken`, and
   `bedrock-agentcore:GetResourceApiKey`.

@@ -52,11 +52,11 @@ tofu apply
 cd scripts
 pip install -r requirements.txt
 
-export TOKEN_ENDPOINT=$(tofu output -chdir=.. -raw token_endpoint)
-export APP_CLIENT_ID=$(tofu output -chdir=.. -raw app_client_id)
-export APP_CLIENT_SECRET=$(tofu output -chdir=.. -raw app_client_secret)
-export SCOPE="$(tofu output -chdir=.. -raw resource_server_identifier)/invoke"
-export GATEWAY_URL=$(tofu output -chdir=.. -raw gateway_url)
+export TOKEN_ENDPOINT=$(tofu -chdir=.. output -raw token_endpoint)
+export APP_CLIENT_ID=$(tofu -chdir=.. output -raw app_client_id)
+export APP_CLIENT_SECRET=$(tofu -chdir=.. output -raw app_client_secret)
+export SCOPE="$(tofu -chdir=.. output -raw resource_server_identifier)/invoke"
+export GATEWAY_URL=$(tofu -chdir=.. output -raw gateway_url)
 
 python3 get_token_and_call_gateway.py
 ```

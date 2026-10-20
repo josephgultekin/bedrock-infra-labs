@@ -73,7 +73,7 @@ terraform apply
 cd scripts
 pip install -r requirements.txt
 
-export MODEL_ID=$(terraform output -chdir=.. -raw model_id)
+export MODEL_ID=$(terraform -chdir=.. output -raw model_id)
 ```
 
 ### 1. See the perceived-latency difference directly
@@ -98,7 +98,7 @@ python3 check_cloudwatch_metrics.py
 Or open the dashboard directly:
 
 ```bash
-terraform output -chdir=.. -raw dashboard_url
+terraform -chdir=.. output -raw dashboard_url
 ```
 
 ## Alarms

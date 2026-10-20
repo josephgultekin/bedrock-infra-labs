@@ -172,9 +172,9 @@ gh workflow run build-push-agentcore-image.yml
 ```bash
 cd agent
 aws ecr get-login-password --region us-east-1 --profile dops | \
-  docker login --username AWS --password-stdin "$(tofu output -chdir=.. -raw ecr_repository_url | cut -d/ -f1)"
-docker build -t "$(tofu output -chdir=.. -raw ecr_repository_url):latest" .
-docker push "$(tofu output -chdir=.. -raw ecr_repository_url):latest"
+  docker login --username AWS --password-stdin "$(tofu -chdir=.. output -raw ecr_repository_url | cut -d/ -f1)"
+docker build -t "$(tofu -chdir=.. output -raw ecr_repository_url):latest" .
+docker push "$(tofu -chdir=.. output -raw ecr_repository_url):latest"
 ```
 
 ### 3. Point the Runtime at the real image
@@ -189,7 +189,7 @@ tofu apply -var="agent_image_tag=latest"
 cd scripts
 pip install -r requirements.txt
 
-export AGENT_RUNTIME_ARN=$(tofu output -chdir=.. -raw agent_runtime_arn)
+export AGENT_RUNTIME_ARN=$(tofu -chdir=.. output -raw agent_runtime_arn)
 python3 invoke_agent_runtime.py "What products do you have?"
 ```
 

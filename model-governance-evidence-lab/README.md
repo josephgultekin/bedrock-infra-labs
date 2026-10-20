@@ -61,10 +61,10 @@ terraform apply
 cd scripts
 pip install -r requirements.txt
 
-export MODEL_PACKAGE_ARN=$(terraform output -chdir=.. -raw model_package_arn)
-export RUNTIME_LOG_GROUP=$(terraform output -chdir=.. -raw runtime_events_log_group)
-export GLUE_CRAWLER_NAME=$(terraform output -chdir=.. -raw glue_crawler_name)
-export GLUE_DATABASE_NAME=$(terraform output -chdir=.. -raw glue_database_name)
+export MODEL_PACKAGE_ARN=$(terraform -chdir=.. output -raw model_package_arn)
+export RUNTIME_LOG_GROUP=$(terraform -chdir=.. output -raw runtime_events_log_group)
+export GLUE_CRAWLER_NAME=$(terraform -chdir=.. output -raw glue_crawler_name)
+export GLUE_DATABASE_NAME=$(terraform -chdir=.. output -raw glue_database_name)
 ```
 
 > Your AWS identity needs the permissions in the `governance_pipeline_policy_arn`
@@ -99,7 +99,7 @@ metadata that a resource tag could never carry.
 ### Inspect the runtime event log directly
 
 ```bash
-aws logs tail "$(terraform output -chdir=.. -raw runtime_events_log_group)" --since 1h
+aws logs tail "$(terraform -chdir=.. output -raw runtime_events_log_group)" --since 1h
 ```
 
 ## Cost notes

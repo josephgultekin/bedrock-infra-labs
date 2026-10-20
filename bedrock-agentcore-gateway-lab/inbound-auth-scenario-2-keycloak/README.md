@@ -139,10 +139,10 @@ tofu apply   # NO -target this time - Keycloak is reachable, so the provider's c
 cd scripts
 pip install -r requirements.txt
 
-export TOKEN_ENDPOINT=$(tofu output -chdir=.. -raw token_endpoint)
-export CLIENT_ID=$(tofu output -chdir=.. -raw client_id)
-export CLIENT_SECRET=$(tofu output -chdir=.. -raw client_secret)
-export GATEWAY_URL=$(tofu output -chdir=.. -raw gateway_url)
+export TOKEN_ENDPOINT=$(tofu -chdir=.. output -raw token_endpoint)
+export CLIENT_ID=$(tofu -chdir=.. output -raw client_id)
+export CLIENT_SECRET=$(tofu -chdir=.. output -raw client_secret)
+export GATEWAY_URL=$(tofu -chdir=.. output -raw gateway_url)
 
 python3 get_token_and_call_gateway.py
 ```

@@ -96,8 +96,8 @@ terraform apply
 cd scripts
 pip install -r requirements.txt
 
-export KNOWLEDGE_BASE_ID=$(terraform output -chdir=.. -raw knowledge_base_id)
-export DATA_SOURCE_ID=$(terraform output -chdir=.. -raw data_source_id)
+export KNOWLEDGE_BASE_ID=$(terraform -chdir=.. output -raw knowledge_base_id)
+export DATA_SOURCE_ID=$(terraform -chdir=.. output -raw data_source_id)
 ```
 
 ### 1. Sync the data source (ingest + embed + write vectors)

@@ -74,9 +74,9 @@ terraform apply
 cd scripts
 pip install -r requirements.txt
 
-export VALIDATOR_FUNCTION_NAME=$(terraform output -chdir=.. -raw booking_validator_function_name)
-export SCHEDULING_API_FUNCTION_NAME=$(terraform output -chdir=.. -raw mock_scheduling_api_function_name)
-export AGENT_ID=$(terraform output -chdir=.. -raw agent_id)
+export VALIDATOR_FUNCTION_NAME=$(terraform -chdir=.. output -raw booking_validator_function_name)
+export SCHEDULING_API_FUNCTION_NAME=$(terraform -chdir=.. output -raw mock_scheduling_api_function_name)
+export AGENT_ID=$(terraform -chdir=.. output -raw agent_id)
 ```
 
 ### The deterministic proof

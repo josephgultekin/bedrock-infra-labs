@@ -9,8 +9,16 @@ resource "aws_cognito_user_pool" "this" {
   name = "${var.project_name}-pool"
 }
 
+locals {
+  # Cognito rejects any domain prefix containing the literal word "cognito"
+  # (InvalidParameterException: "Domain cannot contain reserved word:
+  # cognito") - var.project_name's default ("agentcore-gw-cognito")
+  # contains it, so swap it out just for the domain prefix.
+  cognito_domain_prefix = replace(var.project_name, "cognito", "auth")
+}
+
 resource "aws_cognito_user_pool_domain" "this" {
-  domain       = "${var.project_name}-${data.aws_caller_identity.current.account_id}"
+  domain       = "${local.cognito_domain_prefix}-${data.aws_caller_identity.current.account_id}"
   user_pool_id = aws_cognito_user_pool.this.id
 }
 

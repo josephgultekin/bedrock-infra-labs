@@ -2,7 +2,7 @@
 
 resource "aws_security_group" "nat_instance" {
   name        = "${var.project_name}-nat-instance"
-  description = "NAT instance: accepts forwarded traffic from the VPC's private subnets, egresses anywhere"
+  description = "NAT instance: accepts forwarded traffic from private subnets in this VPC, egresses anywhere"
   vpc_id      = aws_vpc.this.id
 
   ingress {

@@ -12,7 +12,7 @@ run long-term.
 |---|---|
 | [bedrock-agent-action-group-lab](bedrock-agent-action-group-lab/) | A real Bedrock agent action group: OpenAPI schema in S3 + a Lambda executor doing deterministic validation before anything reaches a booking API. |
 | [bedrock-agentcore-lab](bedrock-agentcore-lab/) | Bedrock AgentCore's Gateway (MCP), Runtime, Identity, and Policies, with Lambda-backed tools and the agent container pushed to ECR via GitHub Actions OIDC - all running in private subnets of a non-default VPC behind a NAT instance. |
-| [bedrock-agentcore-gateway-lab](bedrock-agentcore-gateway-lab/) | Dedicated to AgentCore Gateway configurations, one scenario per sub-directory. First up: inbound auth - a Cognito-backed `CUSTOM_JWT` gateway vs. one backed by a self-hosted Keycloak. |
+| [bedrock-agentcore-gateway-lab](bedrock-agentcore-gateway-lab/) | Dedicated to AgentCore Gateway configurations, one scenario per sub-directory: inbound auth (Cognito-backed `CUSTOM_JWT` vs. self-hosted Keycloak) and private Gateway access (`AWS_IAM` + PrivateLink, locked to one VPC-scoped IAM role). |
 | [bedrock-guardrail-lab](bedrock-guardrail-lab/) | API Gateway -> Lambda -> Bedrock Converse with a Guardrail, redacted audit trail, and an EventBridge/Step Functions compliance-review path on intervention. |
 | [bedrock-preflight-guardrail-lab](bedrock-preflight-guardrail-lab/) | A synchronous moderation gate (custom policy check + Bedrock Guardrails) that runs entirely *before* any model or agent is invoked. |
 | [bedrock-prompt-governance-lab](bedrock-prompt-governance-lab/) | Versioned source prompts in S3, Bedrock Prompt Management with `{{variable}}` placeholders, and immutable production prompt versions. |

@@ -34,6 +34,16 @@ key, OAuth2) for Gateway targets that call real third-party APIs, as
 opposed to this repo's existing demos which only invoke Lambda tools
 within the same account.
 
+### Private Gateway access
+
+A different axis entirely - not IdP choice, but *network* reachability.
+Prompted by a real question after applying scenario 1 live: its Gateway
+endpoint is public - can that be locked down?
+
+| Scenario | Demonstrates |
+|---|---|
+| [private-access-scenario-3-aws-iam](private-access-scenario-3-aws-iam/) | `authorizer_type = AWS_IAM` + a Gateway PrivateLink interface endpoint + an `aws:SourceVpce`-conditioned IAM role, so one specific identity can only call the Gateway from inside the VPC. Confirmed from AWS's own docs: this lockdown is **not possible** for `CUSTOM_JWT` gateways (scenarios 1/2) - their endpoint policy is forced to `Principal: "*"` since OAuth callers have no IAM identity to restrict. Read that scenario's "what this does and doesn't prove" section before assuming more than it demonstrates.
+
 ## Conventions
 
 Same as the rest of this repo (see the root README): OpenTofu preferred,
